@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.9.14-management
+#    hostname: serverhostname.domain.local
+    environment:
+      - RABBITMQ_USE_LONGNAME=true
+      - RABBITMQ_BASE=/var/lib/rabbitmq
+      - RABBITMQ_CONFIG_FILES=/var/lib/rabbitmq/rabbitmq.conf
+    volumes:
+      - /docker/rabbitmqmultinode/:/var/lib/rabbitmq/
+      - /docker/rabbitmqmultinode/cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
+    entrypoint: /usr/local/bin/cluster-entrypoint.sh
+    ports:
+      - 4369:4369
+      - 20000:15672
